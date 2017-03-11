@@ -92,6 +92,12 @@ app.get('/upload', (req, res) => {
 	res.render('upload');
 });
 
+const fileUpload = require('express-fileupload');
+app.use(fileUpload());
+app.post('/upload', (req, res) => {
+	console.log(req.files);
+})
+
 if(!module.parent) {
 	app.listen(PORT, _ => {
 		console.log(`Server listening at port ${PORT}`);

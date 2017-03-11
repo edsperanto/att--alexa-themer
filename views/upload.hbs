@@ -1,16 +1,12 @@
-<form action="/upload" method="post">
+<form action="/upload" method="post" encType="multipart/form-data">
 	<table>
 		<tr>
 			<td class="label">Username: </td>
 			<td><input type="text" name="username" /></td>
 		</tr>
 		<tr>
-			<td class="label">Password: </td>
-			<td><input type="password" name="password" /></td>
-		</tr>
-		<tr>
 			<td class="label">Upload file: </td>
-			<td><input type="file" /></td>
+			<td><input type="file" name="music" /></td>
 		</tr>
 		<tr>
 			<td><input type="submit" name="mysubmit" value="Submit"></td>
