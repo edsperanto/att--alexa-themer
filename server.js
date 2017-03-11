@@ -74,6 +74,14 @@ app.get('/', (req, res) => {
 	res.render('index');
 });
 
+app.get('/login', (req, res) => {
+	res.render('login');
+});
+
+app.get('/upload', (req, res) => {
+	res.render('upload');
+});
+
 if(!module.parent) {
 	app.listen(PORT, _ => {
 		console.log(`Server listening at port ${PORT}`);
