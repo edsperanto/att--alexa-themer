@@ -4,8 +4,7 @@
   "description": "//Create an Alexa Simulator with the ability to Detect specific users by Phone ID and play a specific Theme song unique to each user. Have your own theme song whenever you enter a room and have Simlexa greet you!",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
