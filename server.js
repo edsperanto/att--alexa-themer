@@ -70,3 +70,12 @@ passport.deserializeUser(function(user, done) {
   return done(null, user);
 });
 
+app.get('/', (req, res) => {
+	res.render('index');
+});
+
+if(!module.parent) {
+	app.listen(PORT, _ => {
+		console.log(`Server listening at port ${PORT}`);
+	});
+}
