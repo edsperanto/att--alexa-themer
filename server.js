@@ -96,7 +96,7 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 app.post('/upload', (req, res) => {
-  fs.writeFile(`${req.body.username}.mp3`, req.files.music.data);
+  fs.writeFile(`./public/assets/music/${req.body.username}.mp3`, req.files.music.data);
   console.log(req.files);
   res.end();
 });
