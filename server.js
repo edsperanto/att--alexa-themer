@@ -71,16 +71,25 @@ passport.deserializeUser(function(user, done) {
 });
 
 app.get('/', (req, res) => {
-	res.render('index');
+  res.render('index');
 });
 
 app.get('/login', (req, res) => {
-	res.render('login');
+  res.render('login');
 });
 
 app.get('/upload', (req, res) => {
-	res.render('upload');
+  res.render('upload');
 });
+
+
+app.post('/login', isAuth, (req, res) =>{
+ User.create({
+  username: req.body.author, 
+  password: req.body.password
+ })
+  res.redirect(303, '/');
+ })
 
 if(!module.parent) {
 	app.listen(PORT, _ => {
