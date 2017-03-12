@@ -1,17 +1,12 @@
-<div id="mainTable">
-	<form action="/upload" method="post" encType="multipart/form-data">
-		<table>
-			<tr>
-				<td class="label">Username: </td>
-				<td><input type="text" name="username" /></td>
-			</tr>
-			<tr>
-				<td class="label">Upload file: </td>
-				<td><input type="file" name="music" /></td>
-			</tr>
-			<tr>
-				<td><input type="submit" name="mysubmit" value="Submit"></td>
-			</tr>
-		</table>
-	</form>
+<div id="body">
+	<h1 class="subHeader">Upload a song</h1>
+	<div id="mainTable">
+		<form action="/upload" method="post" encType="multipart/form-data">
+					<input type="text" name="username" value="Username" />
+					<br>
+					<td class="label">Upload file: </td>
+					<input type="file" name="music" />
+					<input type="submit" name="mysubmit" value="Submit">
+		</form>
+	</div>
 </div>

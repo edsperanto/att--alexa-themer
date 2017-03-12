@@ -8,9 +8,11 @@ body{
 
 #container{
   heigh: 500px;
-  padding-top: 200px;
+  padding-top: 100px;
   margin: 0 auto; 
   width: 1200px;
+  display: flex;
+  flex-flow: column;
 }
 
 .header{
@@ -21,6 +23,12 @@ body{
   color: yellow;
 }
 
+.subHeader{
+  text-align: center;
+  color: yellow;
+    font-family: 'Sarala', sans-serif;
+  font-size: 2rem;
+}
 .navBtn{
   width: 100%;
   margin: 0 auto;
@@ -39,10 +47,7 @@ color: black;
  background-color: yellow;
 }
 
-.navBtn a:active{
-  color: black;
- background-color: yellow;
-}
+
 
 .navBtn a:visited{
   color: black;
@@ -67,14 +72,95 @@ input[type=text]:focus{
 
 input[type=submit]{
   margin-top: 2rem;
+  height: 2rem;
   background: yellow;
   border: none;
   width: 40%;
+  font-size: 1rem;
 }
 
 #mainTable{
   width: 600px;
   height: 100%;
-  margin-top: 500px;
+  padding-top: 50px;
   margin: 0 auto;
+}
+
+#body{
+  padding-top: 2.5rem;
+}
+
+@media screen and (max-width: 600px){
+      body{
+        background-color: yellow;
+        background-image: none;
+        width: auto;
+      }
+
+      #container{
+        width: auto;
+      }
+
+      .header{
+        font-size: 6rem;
+        text-align: center;
+        color: black;
+        width: auto;
+      }
+
+
+
+      .navBtn {
+        width: 300px;
+        clear: both;
+        margin: 2rem;
+      }
+
+      .navBtn a{
+        width: auto;
+        text-align: center;
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+      }
+
+      .navBtn a:hover{
+        background: none;
+      }
+
+      #mainTable{
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      input[type=text]{
+      width: 75%;
+      height: 3rem;
+      border: none;
+      background: none;
+      border-bottom: solid thin  black;
+      color: black;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+
+    input[type=text]:focus{
+      border: solid yellow;
+      color: black;
+    }
+
+    input[type=file]{
+      width: 75%;
+      margin: 10px;
+      font-family: 'Sarala', sans-serif;
+    }
+
+    input[type=submit]{
+      margin-top: 2rem;
+      height: 2rem;
+      border: solid thin black;
+      margin: 0 auto;
+      width: 40%;
+      font-size: 1rem;
+    }
 }
