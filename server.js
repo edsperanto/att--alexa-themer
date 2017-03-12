@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const fs = require('fs');
+
 // handlebars
 const handlebars = require('express-handlebars');
 const hbs = handlebars.create({
@@ -13,10 +13,15 @@ app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 // request handlers
+const fs = require('fs');
 const bp = require('body-parser');
+const cookieParser = require('cookie-parser');
 const methodOverride = require('method-override');
+const fileUpload = require('express-fileupload');
 app.use(bp.urlencoded({extended: true}));
+app.use(cookieParser());
 app.use(methodOverride('_method'));
+app.use(fileUpload());
 
 // session & passport
 const session = require('express-session');
@@ -25,8 +30,14 @@ const passport = require('passport');
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
+// system
+const child_process = require('child_process');
+const exec = child_process.exec;
+
 // database
 const RedisStore = require('connect-redis')(session);
+const redis = require('redis');
+const client = redis.createClient();
 
 // custom helpers
 const isAuth = require('./public/js/isAuth');
@@ -76,11 +87,37 @@ passport.deserializeUser(function(user, done) {
   return done(null, user);
 });
 
+var playing = [];
+
+function stopEverything() {
+	while(playing.length > 0) {
+		playing[0].kill();
+		playing.splice(0, 1);
+	}
+}
+
+function play(username) {
+	stopEverything();
+	let curr = exec(`play ./public/assets/music/${username}.mp3`);
+	playing.push(curr);
+}
+
 // routes
 
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
+	let cookieId;
+	if(req.cookies)
+		if(req.cookies['connect.sid'])
+			cookieId = 'ses' + req.cookies['connect.sid'].split('.')[0];
+	if(cookieId) {
+		client.get(cookieId, (err, data) => {
+			let cookie = JSON.parse(data).cookie;
+			if(cookie.username)
+				play(cookie.username);
+		});
+	}
   res.render('index');
 });
 
@@ -90,22 +127,28 @@ app.get('/login', (req, res) => {
 
 app.get('/upload', (req, res) =>{
   res.render("upload");
+});
+
+app.get('/stop', (req, res) => {
+	stopEverything();
+	res.render('index');
 })
 
-const fileUpload = require('express-fileupload');
-app.use(fileUpload());
-
 app.post('/upload', (req, res) => {
+	let cookieId = 'ses' + req.cookies['connect.sid'].split('.')[0];
+	console.log(req.files.music);
   fs.writeFile(`./public/assets/music/${req.body.username}.mp3`, req.files.music.data);
-  console.log(req.files);
+	client.get(cookieId, (err, data) => {
+		let newCookie = JSON.parse(data);
+		newCookie.cookie.username = req.body.username;
+		client.set(cookieId, JSON.stringify(newCookie));
+	});
   res.end();
 });
 
-const child_process = require('child_process');
-const exec = child_process.exec;
 app.post('/login', (req, res) =>{
-  console.log('loggedin: ', req.body.username);
-  exec(`play ${req.body.username}.mp3`);
+  console.log('Logged In: ', req.body.username);
+	play(req.body.username);
   res.end();
 });
 
