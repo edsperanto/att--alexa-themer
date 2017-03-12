@@ -34,8 +34,13 @@ body{
   text-decoration: none;
   margin-right: 20px;
 }
-.navBtn a:hover{
+.navBtn a:hover {
 color: black;
+ background-color: yellow;
+}
+
+.navBtn a:active{
+  color: black;
  background-color: yellow;
 }
 
